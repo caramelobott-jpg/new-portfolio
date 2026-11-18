@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Martinsxz — Cibersegurança & Código</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f0d; --surface:#121917; --surface2:#0f1513; --text:#e8f2ec; --text-dim:#8aa399;
+    --accent:#39ff88; --accent2:#ffb020; --border:#22302a;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#f5f3ee; --surface:#ffffff; --surface2:#efece4; --text:#14201b; --text-dim:#5c6b63;
+      --accent:#0e9f5a; --accent2:#c97a12; --border:#dedad0;
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f3ee; --surface:#ffffff; --surface2:#efece4; --text:#14201b; --text-dim:#5c6b63;
+    --accent:#0e9f5a; --accent2:#c97a12; --border:#dedad0;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    line-height:1.55;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:860px; margin:0 auto; padding:0 20px;}
+  a{color:var(--accent);}
+
+  /* Terminal hero */
+  .hero{padding:56px 0 40px;}
+  .termwin{
+    border:1px solid var(--border); border-radius:10px; background:var(--surface);
+    overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.25);
+  }
+  .termbar{display:flex; gap:7px; align-items:center; padding:12px 16px; border-bottom:1px solid var(--border); background:var(--surface2);}
+  .dot{width:10px; height:10px; border-radius:50%;}
+  .d1{background:#ff5f56;} .d2{background:#ffbd2e;} .d3{background:#27c93f;}
+  .termtitle{margin-left:10px; color:var(--text-dim); font-size:0.78rem;}
+  .termbody{padding:28px 22px 32px;}
+  .prompt{color:var(--text-dim); font-size:0.95rem;}
+  .prompt .sym{color:var(--accent);}
+  .typeline{
+    display:inline-block; overflow:hidden; white-space:nowrap; border-right:2px solid var(--accent);
+    animation: type 1.8s steps(28,end) 1, blink 0.9s step-end 6;
+    font-size:1.55rem; font-weight:700; color:var(--text); margin:10px 0 6px;
+  }
+  @keyframes type{from{width:0} to{width:16ch}}
+  @keyframes blink{50%{border-color:transparent}}
+  @media (prefers-reduced-motion: reduce){
+    .typeline{animation:none; width:auto; border-right:none;}
+  }
+  .role{color:var(--text-dim); font-size:1rem; margin-top:2px;}
+  .tagline{color:var(--accent2); font-size:0.95rem; margin-top:14px;}
+  .loc{color:var(--text-dim); font-size:0.85rem; margin-top:4px;}
+
+  section{padding:36px 0; border-top:1px solid var(--border);}
+  .cmd{color:var(--text-dim); font-size:0.9rem; margin-bottom:14px;}
+  .cmd .sym{color:var(--accent);}
+  h2{font-size:1.15rem; margin:0 0 16px; font-weight:600;}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px;}
+  .card{border:1px solid var(--border); border-radius:8px; padding:16px; background:var(--surface);}
+  .card h3{margin:0 0 6px; font-size:0.98rem;}
+  .card p{margin:0; color:var(--text-dim); font-size:0.88rem;}
+  .card .tag{display:inline-block; margin-top:10px; font-size:0.75rem; color:var(--accent); border:1px solid var(--border); border-radius:5px; padding:2px 8px;}
+
+  .skills{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill{border:1px solid var(--border); border-radius:6px; padding:6px 12px; font-size:0.85rem; color:var(--text-dim);}
+  .skill.on{color:var(--accent); border-color:var(--accent);}
+
+  .timeline{border-left:2px solid var(--border); margin-left:4px; padding-left:20px;}
+  .tlitem{position:relative; margin-bottom:18px;}
+  .tlitem::before{content:""; position:absolute; left:-25px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--accent);}
+  .tlitem .when{color:var(--text-dim); font-size:0.78rem;}
+  .tlitem .what{font-size:0.95rem; margin-top:2px;}
+
+  footer{padding:30px 0 50px; color:var(--text-dim); font-size:0.85rem;}
+  .links{display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;}
+  .links a{text-decoration:none; border-bottom:1px solid var(--accent);}
+</style>
+</head>
+<body>
+
+<div class="wrap hero">
+  <div class="termwin">
+    <div class="termbar">
+      <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+      <span class="termtitle mono">martinsxz@viosa-es: ~</span>
+    </div>
+    <div class="termbody">
+      <div class="prompt mono"><span class="sym">$</span> whoami</div>
+      <div class="typeline mono">Martinsxz</div>
+      <div class="role">Back-end & Cibersegurança — em formação</div>
+      <div class="loc mono">Vitória, ES · Brasil</div>
+      <div class="tagline mono">build. learn. evolve.</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="cmd mono"><span class="sym">$</span> cat sobre.txt</div>
+    <p>Comecei em janeiro, do zero, testando Python, front-end e back-end até entender que
+    cibersegurança era o caminho certo. Hoje estudo com foco em Blue Team — defesa, logs,
+    boas práticas — para depois seguir para Red Team, sempre em ambiente autorizado.
+    No meio do caminho, aprendi C, Java, e a programar pensando em segurança desde a primeira linha.</p>
+  </section>
+
+  <section>
+    <div class="cmd mono"><span class="sym">$</span> cat skills.txt</div>
+    <div class="skills">
+      <span class="skill on">Python</span>
+      <span class="skill on">Lógica de programação</span>
+      <span class="skill">C</span>
+      <span class="skill">Java</span>
+      <span class="skill">Linux</span>
+      <span class="skill">Windows</span>
+      <span class="skill">Nmap</span>
+      <span class="skill">Git & GitHub</span>
+      <span class="skill">HTML / CSS</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="cmd mono"><span class="sym">$</span> ls ~/projetos</div>
+    <div class="grid">
+      <div class="card">
+        <h3>Gerador de Senhas</h3>
+        <p>Gera senhas fortes e aleatórias com random.choice, pensado para reforçar boas práticas contra brute force.</p>
+        <span class="tag mono">python</span>
+      </div>
+      <div class="card">
+        <h3>Jogo da Imaginação</h3>
+        <p>Jogo de escolha e sorteio com while, listas e funções — meu primeiro projeto estruturado em módulos.</p>
+        <span class="tag mono">python</span>
+      </div>
+      <div class="card">
+        <h3>Sistema de Cadastro</h3>
+        <p>Autenticação por nome e CPF usando dicionários aninhados e verificação cruzada com and.</p>
+        <span class="tag mono">python</span>
+      </div>
+      <div class="card">
+        <h3>Trajetória Pessoal</h3>
+        <p>Site contando minha entrada na área, do primeiro Hello World até cibersegurança.</p>
+        <span class="tag mono">html/css</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cmd mono"><span class="sym">$</span> git log --oneline</div>
+    <div class="timeline">
+      <div class="tlitem"><div class="when mono">jan 2026</div><div class="what">Primeiros passos em Python e lógica de programação</div></div>
+      <div class="tlitem"><div class="when mono">out 2026</div><div class="what">C, Java e Termux configurados do zero; Linux Fundamentals concluído</div></div>
+      <div class="tlitem"><div class="when mono">nov 2026</div><div class="what">Dicionários, módulos e projetos com múltiplos arquivos</div></div>
+      <div class="tlitem"><div class="when mono">agora</div><div class="what">Rumo ao TryHackMe prático e Blue Team</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cmd mono"><span class="sym">$</span> contato --show</div>
+    <p>Sempre aberto para trocar ideia sobre tecnologia e cibersegurança.</p>
+    <div class="links mono">
+      <a href="https://github.com/caramelobott-jpg" target="_blank" rel="noopener">github.com/caramelobott-jpg</a>
+      <a href="https://martins-trajetoria-dev.vercel.app" target="_blank" rel="noopener">trajetória completa →</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
